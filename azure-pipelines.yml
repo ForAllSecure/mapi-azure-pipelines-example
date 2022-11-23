@@ -65,3 +65,4 @@ steps:
     artifact: mapi-html-report
 
 - task: PublishTestResults@2
+  condition: always()
