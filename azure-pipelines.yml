@@ -16,6 +16,10 @@ strategy:
       python.version: '3.7'
 
 steps:
+- checkout: self
+  clean: "true"
+  fetchDepth: "50"
+
 # Create environment to run API
 - task: UsePythonVersion@0
   inputs:
@@ -47,10 +51,17 @@ steps:
 
     ./mapi run azure-pipelines-example auto http://localhost:8000/openapi.json \
       --url 'http://localhost:8000' \
-      --junit TEST-mapi.xml
+      --junit TEST-mapi.xml \
+      --html mapi.html
   env:
       MAPI_TOKEN: $(MAPI_TOKEN)
   displayName: Run Mayhem for API to check for vulnerabilities
   continueOnError: "true"
+
+- task: PublishPipelineArtifact@1
+  displayName: 'Publish Pipeline Artifact'
+  inputs:
+    path: 'mapi.html'
+    artifact: mapi-html-report
 
 - task: PublishTestResults@2
