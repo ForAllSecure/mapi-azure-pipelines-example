@@ -46,7 +46,6 @@ steps:
 
 # Run Mayhem for API
 - script: |
-    printenv
     curl -Lo mapi https://mayhem4api.forallsecure.com/downloads/cli/latest/linux-musl/mapi \
       && chmod +x mapi
 
@@ -58,13 +57,12 @@ steps:
       MAPI_TOKEN: $(MAPI_TOKEN)
   displayName: Run Mayhem for API to check for vulnerabilities
   continueOnError: "true"
-  failOnStderr: "false"
 
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
   inputs:
     path: 'mapi.html'
     artifact: mapi-html-report
+  continueOnError: "true"
 
 - task: PublishTestResults@2
-  condition: always()
