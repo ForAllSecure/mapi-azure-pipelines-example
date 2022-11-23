@@ -46,6 +46,7 @@ steps:
 
 # Run Mayhem for API
 - script: |
+    printenv
     curl -Lo mapi https://mayhem4api.forallsecure.com/downloads/cli/latest/linux-musl/mapi \
       && chmod +x mapi
 
