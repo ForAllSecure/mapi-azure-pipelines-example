@@ -58,6 +58,7 @@ steps:
       MAPI_TOKEN: $(MAPI_TOKEN)
   displayName: Run Mayhem for API to check for vulnerabilities
   continueOnError: "true"
+  failOnStderr: "false"
 
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
