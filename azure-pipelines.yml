@@ -10,16 +10,13 @@ pool:
   vmImage: ubuntu-latest
 strategy:
   matrix:
-    Python27:
-      python.version: '2.7'
-    Python35:
-      python.version: '3.5'
     Python36:
       python.version: '3.6'
     Python37:
       python.version: '3.7'
 
 steps:
+# Create environment to run API
 - task: UsePythonVersion@0
   inputs:
     versionSpec: '$(python.version)'
@@ -34,3 +31,25 @@ steps:
     pip install pytest pytest-azurepipelines
     pytest
   displayName: 'pytest'
+
+# Run API in test mode. We configured test mode to output stacktraces in
+# the error responses to improve the output of Mayhem for API.
+- script: |
+    uvicorn src.main:app &
+  env:
+      FASTAPI_ENV: test
+  displayName: Run API
+
+# Run Mayhem for API
+- script: |
+    curl -Lo mapi https://mayhem4api.forallsecure.com/downloads/cli/latest/linux-musl/mapi \
+      && chmod +x mapi
+
+    ./mapi run azure-pipelines-example auto http://localhost:8000/openapi.json \
+      --url 'http://localhost:8000' \
+      --junit TEST-mapi.xml
+  env:
+      MAPI_TOKEN: $(MAPI_TOKEN)
+  displayName: Run Mayhem for API to check for vulnerabilities
+
+- task: PublishTestResults@2
