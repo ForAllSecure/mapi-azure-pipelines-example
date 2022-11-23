@@ -18,6 +18,8 @@ strategy:
 steps:
 - checkout: self
   clean: "true"
+  # Fetch a deep enough history to compute the merge base of branches with the
+  # default branch.  Alternatively, set to "0" to fetch the entire history.
   fetchDepth: "50"
 
 # Create environment to run API
@@ -55,8 +57,8 @@ steps:
       --html mapi.html
   env:
       MAPI_TOKEN: $(MAPI_TOKEN)
-  displayName: Run Mayhem for API to check for vulnerabilities
   continueOnError: "true"
+  displayName: Run Mayhem for API to check for vulnerabilities
 
 - task: PublishPipelineArtifact@1
   displayName: 'Publish Pipeline Artifact'
