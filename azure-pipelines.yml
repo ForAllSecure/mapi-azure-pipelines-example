@@ -51,5 +51,6 @@ steps:
   env:
       MAPI_TOKEN: $(MAPI_TOKEN)
   displayName: Run Mayhem for API to check for vulnerabilities
+  continueOnError: "true"
 
 - task: PublishTestResults@2
