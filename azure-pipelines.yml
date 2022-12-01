@@ -40,7 +40,6 @@ steps:
   displayName: 'pytest'
 
 - bash: |
-    git fetch origin
     git merge-base HEAD origin/main
     printenv
 
