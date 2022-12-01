@@ -18,10 +18,10 @@ strategy:
 
 steps:
 - checkout: self
-  clean: "true"
   # Fetch a deep enough history to compute the merge base of branches with the
   # default branch.  Alternatively, set to "0" to fetch the entire history.
   fetchDepth: "50"
+  persistCredentials: "true"
 
 # Create environment to run API
 - task: UsePythonVersion@0
@@ -42,6 +42,7 @@ steps:
 # Run API in test mode. We configured test mode to output stacktraces in
 # the error responses to improve the output of Mayhem for API.
 - script: |
+    echo $BUILD_REQUESTEDFOREMAIL
     uvicorn src.main:app &
   env:
       FASTAPI_ENV: test
@@ -49,7 +50,6 @@ steps:
 
 # Run Mayhem for API
 - script: |
-    echo $BUILD_REQUESTEDFOREMAIL
 
     curl -Lo mapi https://mayhem4api.forallsecure.com/downloads/cli/latest/linux-musl/mapi \
       && chmod +x mapi
