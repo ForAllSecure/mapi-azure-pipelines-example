@@ -40,6 +40,7 @@ steps:
   displayName: 'pytest'
 
 - bash: git remote
+- bash: git merge-base test-email-env-var main
 
 - bash: echo $BUILD_REQUESTEDFOREMAIL
 
