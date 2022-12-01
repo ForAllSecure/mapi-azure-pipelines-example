@@ -41,7 +41,7 @@ steps:
 
 - bash: |
     git merge-base HEAD origin/main
-    printenv
+    git log --pretty=format:"%ae" HEAD^!
 
 # Run API in test mode. We configured test mode to output stacktraces in
 # the error responses to improve the output of Mayhem for API.
