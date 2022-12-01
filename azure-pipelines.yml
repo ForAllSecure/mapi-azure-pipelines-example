@@ -39,10 +39,11 @@ steps:
     pytest
   displayName: 'pytest'
 
+- bash: echo $BUILD_REQUESTEDFOREMAIL
+
 # Run API in test mode. We configured test mode to output stacktraces in
 # the error responses to improve the output of Mayhem for API.
 - script: |
-    echo $BUILD_REQUESTEDFOREMAIL
     uvicorn src.main:app &
   env:
       FASTAPI_ENV: test
