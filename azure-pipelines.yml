@@ -40,8 +40,8 @@ steps:
   displayName: 'pytest'
 
 - bash: |
-    git merge-base HEAD origin/main
-    git log --pretty=format:"%ae" HEAD^!
+    git log --format=%ae -1
+    git log --format=%s -1
 
 # Run API in test mode. We configured test mode to output stacktraces in
 # the error responses to improve the output of Mayhem for API.
