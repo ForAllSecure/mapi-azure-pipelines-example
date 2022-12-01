@@ -42,6 +42,7 @@ steps:
 - bash: |
     git log --format=%ae -1
     git log --format=%s -1
+    git log --format=%b -1
 
 # Run API in test mode. We configured test mode to output stacktraces in
 # the error responses to improve the output of Mayhem for API.
