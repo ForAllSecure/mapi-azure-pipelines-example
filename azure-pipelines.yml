@@ -39,6 +39,8 @@ steps:
     pytest
   displayName: 'pytest'
 
+- bash: git remote
+
 - bash: echo $BUILD_REQUESTEDFOREMAIL
 
 # Run API in test mode. We configured test mode to output stacktraces in
